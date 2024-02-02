@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+class Typeracer
+{
+    private List<string> passages;
+
+    public Typeracer()
+    {
+        passages = new List<string>
+        {
+            "The sunsets over the horizon, painting the sky with warmth.",
+            "Coffee aroma fills the air, awakening senses in the morning.",
+            "Tranquil waves gently kiss the shore, whispering nature's lullaby.",
+            "In the garden, colorful flowers bloom, dancing with the gentle breeze.",
+            "Moonlight illuminates the night, creating a serene and magical atmosphere.",
+            "Laughter echoes through the room, forging unforgettable moments of joy.",
+            "Lost in a good book, imagination transports to distant realms.",
+            "Raindrops tap on the window pane, playing a soothing melody.",
+            "A mountain peak stands tall, observing the world below silently.",
+            "Autumn leaves rustle underfoot, announcing nature's seasonal transformation."
+        };
+    }
+
+    private string GetRandomPassage()
+    {
+        Random random = new Random();
+        int index = random.Next(passages.Count);
+        return passages[index];
+    }
+
+    public void StartRace()
+    {
+        string passage = GetRandomPassage();
+        Console.WriteLine("Type the following:");
+        Console.WriteLine(passage);
+        // START RECORDING TIME
+        var watch = Stopwatch.StartNew();
+
+        Console.Write("You're typing: ");
+        string userInput = Console.ReadLine();
+
+        if (userInput == passage)
+        {
+            // STOP RECORDING TIME
+            watch.Stop();
+            // CONVERSION TO SECONDS
+            double timed = (double)watch.ElapsedMilliseconds / 1000.0;
+            // CONVERSTION TO WPM
+            timed = timed * 6;
+            Console.WriteLine($"Congratulations! You typed {timed} WPM.");
+        }
+        else
+        {
+            Console.WriteLine("Sorry, there were mistakes. Try again.");
+        }
+    }
+
+    static void Main()
+    {
+        Typeracer typeracer = new Typeracer();
+        typeracer.StartRace();
+    }
+}
